@@ -16,6 +16,7 @@ html {
 --magic-color: #ffffff;
 --accent-color: #E7E9FC;
 --background-color: #F4F4FD;
+--transition-dur-and-func: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body{
@@ -30,6 +31,16 @@ body{
 h1,h2,h3,h4,h5,h6,p,a{
     padding: 0;
     margin: 0;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+button{
+    cursor: pointer;
 }
 
 .visually-hidden {
@@ -147,16 +158,31 @@ color: var(--headings-color);
     letter-spacing: 0.02em;
     text-decoration: none;
 
+    transition: color var(--transition-dur-and-func);
+    
 }
 
-.address-text:hover,
-.address-text:focus, .nav-link:hover, .nav-link:focus{
-    color: var(--hover-color);
+.nav-item{
+    position: relative;
 }
 
-/* .nav-link.link-current{
+.nav-link.link-current{
     color: var(--primary-brand-color);
-} */
+}
+
+
+.link-current::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+
+    background-color: var(--primary-brand-color);
+    border-radius: 2px;
+
+}
 
 
 /* address */
@@ -177,7 +203,14 @@ color: var(--headings-color);
     text-decoration: none;
     padding-top: 24px;
     padding-bottom: 24px;
-    
+    transition: color var(--transition-dur-and-func);
+}
+
+.address-text:hover,
+.address-text:focus,
+.nav-link:hover,
+.nav-link:focus {
+    color: var(--hover-color);
 }
 
 .section-title {
@@ -192,6 +225,7 @@ color: var(--headings-color);
     text-align: center;
 
 }
+
 
 /* Hero Section */
 
@@ -234,6 +268,7 @@ color: var(--headings-color);
     border-color: transparent;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
+    transition: background-color var(--transition-dur-and-func);
 }
 
 .hero-button:hover, .hero-button:focus {
@@ -367,6 +402,7 @@ color: var(--headings-color);
     height: 40px;
     border-radius: 50%;
     background-color: var(--primary-brand-color);
+    transition: background-color var(--transition-dur-and-func);
 }
 
 .team-icon:hover,
@@ -396,28 +432,26 @@ color: var(--headings-color);
     height: 88px;
     border: 1px solid var(--subtle-text);
     border-radius: 4px;
+    transition: border-color var(--transition-dur-and-func);
     
 }
 
 .customers-icon{
     fill: var(--subtle-text);
+    transition: fill var(--transition-dur-and-func);;
 }
 
-/* .customers-icon:hover{
-    fill: var(--hover-color);
-} */
+
 
 .customers-item:hover .customers-icon,
 .customers-item:focus .customers-icon {
 fill: var(--hover-color);
-
 }
 
 
 .customers-item:hover,
 .customers-item:focus {
-    border-color: var(--hover-color);
-    
+    border-color: var(--hover-color);   
 }
 
 /* Footer Section */ 
@@ -477,6 +511,7 @@ color: var(--background-color);
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    transition: background-color var(--transition-dur-and-func);
 }
 
 .foot-network-list {
@@ -520,6 +555,10 @@ color: var(--background-color);
     border: 1px solid #e7e9fc;
     border-radius: 4px;
     cursor: pointer;
+    transition: color var(--transition-dur-and-func), 
+    background-color var(--transition-dur-and-func), 
+    box-shadow var(--transition-dur-and-func),
+    border-color var(--transition-dur-and-func);
 
 }
 
@@ -531,16 +570,14 @@ color: var(--background-color);
     cursor: pointer;
 }
 
+
 /* Portfolio Work */
-
-
 
 .project-link{
     text-decoration: none;
     display: block;
+    transition: box-shadow var(--transition-dur-and-func);
 }
-
-
 
 .projects-list {
     justify-content: center;
@@ -552,6 +589,7 @@ color: var(--background-color);
 
 .projects-item {
     width: 360px;
+    height: auto;
     margin-right: 24px;
     margin-bottom: 48px;
     
@@ -566,6 +604,7 @@ color: var(--background-color);
 }
 
 .projects-card {
+    width: 100%;
     padding-top: 32px;
     padding-bottom: 32px;
     padding-left: 16px;
@@ -597,5 +636,90 @@ color: var(--background-color);
 
 .project-link:hover, .project-link:focus{
 box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
+
 }
 
+
+.project-list-img-wrapper{
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    overflow-y: scroll;
+    transform: translate(0, 100%);
+    transition: transform var(--transition-dur-and-func);
+
+    line-height: 1.5;  
+    letter-spacing: 0.02em;
+    padding: 40px 32px;
+    color: var(--magic-color);
+    background-color: var(--primary-brand-color);
+}
+
+
+.project-link:hover .overlay{
+    transform: translate(0, 0);
+}
+
+
+/* Modal Backdrop */
+
+.backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(46, 47, 66, 0.4);
+    transition: opacity var(--transition-dur-and-func), visibility var(--transition-dur-and-func);
+}
+
+.backdrop.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+}
+
+.modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 408px;
+    height: 576px;
+    background-color: var(--magic-color);
+    outline: 1px solid black;
+}
+
+.modal-close-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 24px;
+    right: 24px;    
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 0;
+    background-color: var(--accent-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    transition: border-color var(--transition-dur-and-func), box-shadow var(--transition-dur-and-func);
+
+}
+
+.modal-close-btn:hover, .modal-close-btn:focus{
+    border-color: transparent;
+    box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
+}
